@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/2.5.1/uicons-regular-rounded/css/uicons-regular-rounded.css'>
+    <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/2.5.1/uicons-brands/css/uicons-brands.css'>
+    <title>Confirmation Module</title>
+
+    <!-- Google Font - Poppins -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f7fbfe;
+        }
+
+        .c-card {
+            background-color: #fff;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.01);
+            width: 300px;
+            text-align: center;
+            padding: 15px; /* Padding for the card */
+            padding-bottom: 0;
+        }
+
+        .food-img-container {
+            padding: 1px; /* Padding between the image and card */
+            overflow: hidden;
+        }
+
+        .food-img {
+            width: 100%;
+            aspect-ratio: 16/9;
+            object-fit: cover;
+            border-radius: 15px; /* All 4 corners rounded */
+        }
+
+        .card-content {
+            padding: 20px 0; /* Padding below the image */
+        }
+
+        .food-nme {
+            font-size: 24px;
+            font-weight: 600; /* Medium weight */
+            margin-bottom: 10px;
+            color: #333;
+        }
+
+        .kitchen-nme {
+            font-size: 14px;
+            font-weight: 300; /* Light weight */
+            color: #666;
+            margin-bottom: 10px;
+        }
+
+        .c-price {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: #444;
+        }
+
+        .description {
+            font-size: 14px;
+            color: #777;
+            margin-bottom: 30px;
+            line-height: 1.5;
+        }
+
+        /* Buttons */
+        .location-btn, .confirm-btn {
+            font-family: 'Poppins', sans-serif;
+            font-weight: 600;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border: none;
+            padding: 8px 20px;
+            font-size: 16px;
+            color: #fff;
+            cursor: pointer;
+            border-radius: 10px;
+            width: 100%;
+            position: relative;
+            overflow: hidden;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+
+        /* Locate Button (Blue) */
+        .location-btn {
+            background-color: #007bff;
+            margin-bottom: 10px;
+        }
+
+        .location-btn i
+         {
+            margin-left: 15px;
+            margin-top: 6px;
+            font-size: 18px;
+        }
+
+        /* Confirm Button (Green with Reflective Shine) */
+        .confirm-btn {
+            background-color: #25D366; /* WhatsApp green */
+            position: relative;
+            overflow: hidden;
+            padding: 11.6px 20px;
+            padding-bottom: 12px;
+        }
+
+        /* Shine Effect */
+        .confirm-btn::before {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            top: 0;
+            left: -75%; /* Start the shine effect off-screen */
+            width: 50%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.5);
+            transform: skewX(-20deg); /* Angle of the shine */
+            transition: 0.7s;
+            animation: shine-effect 2.5s infinite;
+        }
+
+
+
+        @keyframes shine-effect {
+            0% {
+                left: -75%;
+            }
+            50% {
+                left: 125%; /* Move across the button */
+            }
+            100% {
+                left: -75%; /* Reset position */
+            }
+        }
+
+        .confirm-btn i {
+            margin-left: 15px;
+            font-size: 18px;
+            margin-top: 6px;
+        }
+
+        /* Hover and Active Effects */
+        .location-btn:hover, .confirm-btn:hover {
+            transform: translateY(-3px);
+        }
+
+        .location-btn:active, .confirm-btn:active {
+            transform: scale(0.98);
+        }
+
+        .by-prefix {
+            font-size: 10px;
+            vertical-align: super;
+            margin-right: 4px;
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="c-card">
+        <div class="food-img-container">
+            <img src="" alt="Delicious Food" class="food-img" id="food-img">
+        </div>
+        <div class="card-content">
+            <h2 class="food-nme" id="food-name">Delicious Pasta</h2>
+            <p class="kitchen-nme"><span class="by-prefix">by</span><span id="kitchen-name">Gourmet Kitchen</span></p>
+            <p class="c-price" id="food-price">₹500</p>
+            <p class="description" id="food-description">A delightful mix of fresh ingredients and herbs to give you the best taste in town. Perfect for any meal of the day!</p>
+            
+            <button class="location-btn" id="location-btn">
+                Locate Now <i class="fi fi-rr-location-crosshairs"></i>
+            </button>
+    
+            <button class="confirm-btn" id="confirm-btn" style="display: none;"> <!-- Initially hidden -->
+                Confirm Now <i class="fi fi-brands-whatsapp"></i>
+            </button>
+        </div>
+    </div>
+
+    <script>
+        // Fetch data from local storage
+        const foodName = localStorage.getItem('food_name');
+        const foodImageUrl = localStorage.getItem('imageUrl');
+        const foodDescription = localStorage.getItem('description');
+        const foodPrice = localStorage.getItem('price');
+        const kitchenName = localStorage.getItem('kitchen');
+        const foodType = localStorage.getItem('type'); // Fetch the food type
+        const locationUrl = localStorage.getItem('location'); // Fetch the location URL
+
+        // Update the DOM elements with fetched data
+        document.getElementById('food-name').textContent = foodName || 'Default Food Name';
+        document.getElementById('food-img').src = foodImageUrl || 'default.jpg'; // Provide a default image URL if none is present
+        document.getElementById('food-description').textContent = foodDescription || 'Default description';
+        document.getElementById('food-price').textContent = foodPrice ? `₹${foodPrice}` : '₹0';
+        document.getElementById('kitchen-name').textContent = kitchenName || 'Default Kitchen';
+
+        // Add click event listener to the location button
+        document.getElementById('location-btn').addEventListener('click', function() {
+            if (locationUrl) {
+                window.open(locationUrl, '_blank'); // Open the URL in a new tab
+            } else {
+                alert('No location available'); // Alert if no location is stored
+            }
+        });
+
+        // Get current hour
+        const currentHour = new Date().getHours();
+
+        // Determine visibility of the confirm button based on conditions
+        let showConfirmButton = false;
+
+        if (foodType === 'B') {
+            if (!(currentHour >= 10 && currentHour < 15) && !(currentHour >= 15 && currentHour < 22)) {
+                showConfirmButton = true; // Show for breakfast if outside the time range
+            }
+        } else if (foodType === 'L') {
+            if (currentHour >= 10 && currentHour < 15) {
+                showConfirmButton = true; // Show for lunch if within the time range
+            }
+        } else if (foodType === 'D') {
+            if (currentHour >= 15 && currentHour < 22) {
+                showConfirmButton = true; // Show for dinner if within the time range
+            }
+        }
+
+        // Show or hide the confirm button
+        document.getElementById('confirm-btn').style.display = showConfirmButton ? 'block' : 'none';
+
+
+
+
+
+        
+         
+    document.getElementById('confirm-btn').addEventListener('click', function() {
+    let whatsappNumber = localStorage.getItem('whatsapp'); // Get WhatsApp number from local storage
+    const foodType = localStorage.getItem('type') || 'B'; // Default to breakfast if no type
+    const foodName = localStorage.getItem('food_name') || 'Default Food'; // Get food name
+    const userName = localStorage.getItem('uName') || 'Customer'; // Get user name from local storage
+    const userPhone = localStorage.getItem('uPhone') || '0000000000'; // Get user's phone number
+
+
+    // Check if the WhatsApp number has '+91'. If not, add it.
+    if (!whatsappNumber.startsWith('+91')) {
+        whatsappNumber = '+91' + whatsappNumber;
+    }
+
+    // Determine meal type for the confirmation message
+    let mealType;
+    if (foodType === 'D') {
+        mealType = 'Dinner';
+    } else if (foodType === 'L') {
+        mealType = 'Lunch';
+    } else {
+        mealType = 'Breakfast';
+    }
+
+    // Get current date in DD/MM/YYYY format
+    const today = new Date();
+    const formattedDate = `${today.getDate().toString().padStart(2, '0')}/${(today.getMonth() + 1).toString().padStart(2, '0')}/${today.getFullYear()}`;
+
+    if (whatsappNumber) {
+        // Construct the message
+        const message = `*${userName}*\n` + // First line: Bold name
+                        `_${userPhone}_\n\n` + // Second line: Bold phone, third line: blank
+                        `_${mealType} Confirmation for ${foodName} on ${formattedDate}_\n\n` + // Fourth line: italic meal type and food name with date
+                        `unCraved.fun`; // Fifth line: unCraved.fun text
+
+        // Encode message for URL
+        const encodedMessage = encodeURIComponent(message);
+        const whatsappUrlMobile = `https://wa.me/${whatsappNumber}?text=${encodedMessage}`; // Mobile URL
+        const whatsappUrlDesktopApp = `whatsapp://send?phone=${whatsappNumber}&text=${encodedMessage}`; // Desktop app URL
+        const whatsappUrlWeb = `https://web.whatsapp.com/send?phone=${whatsappNumber}&text=${encodedMessage}`; // WhatsApp Web URL
+
+        // Check for mobile or desktop device
+        const isMobile = /Android|iPhone|iPad|iPod|Opera Mini|IEMobile|Mobile/i.test(navigator.userAgent);
+
+        // Detect if WhatsApp Desktop app is available (by checking protocol support)
+        const openWhatsApp = (url) => {
+            const iframe = document.createElement('iframe');
+            iframe.style.display = 'none';
+            iframe.src = url;
+            document.body.appendChild(iframe);
+            setTimeout(() => {
+                document.body.removeChild(iframe);
+            }, 1000);
+        };
+
+        if (isMobile) {
+            // For mobile devices, open WhatsApp mobile link
+            window.location.href = whatsappUrlMobile;
+        } else {
+            // For desktop, first try to open the WhatsApp desktop app
+            openWhatsApp(whatsappUrlDesktopApp);
+
+            // Fallback to WhatsApp Web after a slight delay if desktop app isn't available
+            setTimeout(() => {
+                window.open(whatsappUrlWeb, '_blank');
+            }, 1000); // 1-second delay to attempt WhatsApp desktop first
+        }
+    } else {
+        alert('WhatsApp number not available');
+    }
+});
+
+
+
+
+    </script>
+
+</body>
+</html>

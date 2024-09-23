@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>UnCraved Profile</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #667eea, #9e6bd2);
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      max-height: 100%;
+    }
+
+    .profile-container {
+      background-color: #fff;
+      width: 75%;
+      max-width: 350px;
+      border-radius: 15px;
+      box-shadow: 0 8px 20px rgb(255, 255, 255, 0.1);
+      padding: 30px;
+      text-align: center;
+      transition: transform 0.3s ease-in-out;
+    }
+
+    .profile-container:hover {
+      transform: translateY(-5px);
+    }
+
+    .profile-initial {
+      width: 120px;
+      height: 120px;
+      background-color: #FFD700; /* Golden color */
+      color: #fff;
+      font-size: 68px;
+      font-weight: bold;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border-radius: 50%;
+      margin: 0 auto 15px;
+      text-shadow: 2px 2px 5px rgba(255, 255, 255, 0.3);
+      box-shadow: 0 6px 15px rgba(255, 215, 0, 0.3);
+    }
+
+    .profile-container h2 {
+      margin: 0;
+      font-size: 24px;
+      font-weight: 600;
+      color: #333;
+    }
+
+    .profile-container p {
+      margin: 5px 0;
+      color: #777;
+      font-size: 16px;
+      margin-bottom: 40px;
+    }
+
+    .beta-card {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(135deg, #667eea, #9e6bd2);
+      padding: 15px;
+      margin: 20px 0;
+      border-radius: 12px;
+      color: #ffffff;
+      font-size: 14px;
+      font-weight: 400;
+      font-family: 'Poppins', sans-serif;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      text-align: center;
+    }
+
+    .beta-card .icon {
+      font-size: 28px;
+      margin-right: 4px;
+      vertical-align: middle;
+    }
+
+    .beta-card .text {
+      font-size: 16px;
+      line-height: 1.5;
+      font-weight: 600;
+    }
+
+    .button-container {
+      margin-top: 25px;
+    }
+
+    .button-container a {
+      display: inline-block;
+      padding: 10px 30px;
+      text-decoration: none;
+      background-color: #FF4B2B;
+      color: #fff;
+      font-weight: 700;
+      font-size: 18px;
+      border-radius: 25px;
+      transition: background-color 0.3s ease;
+      box-shadow: 0 6px 15px rgba(255, 75, 43, 0.2);
+    }
+
+    .button-container a:hover {
+      background-color: rgb(212, 0, 0);
+    }
+  </style>
+</head>
+<body>
+
+  <div class="profile-container">
+    <div id="profileInitial" class="profile-initial">J</div>
+    <h2 id="userName">John Doe</h2>
+    <p id="userPhone">+91 8237913246</p>
+
+    <div class="beta-card">
+      <span class="icon">⚡</span>
+      <span class="text">UnCraved Beta – Be the first to experience it!</span>
+    </div>
+    <img style="height: 25px; width: auto; margin-top: 10px; opacity: 100%;" src="https://raw.githubusercontent.com/NxtCounsil/UnCraved.in/refs/heads/main/20240829_205223.jpg" alt="UnCraved Logo">
+    <div class="button-container">
+      <a href="#" onclick="logout()">Logout</a>
+    </div>
+  </div>
+
+  <script>
+
+               // Check if 'uName' and 'uPhone' are present in localStorage
+    if (!localStorage.getItem('uName') || !localStorage.getItem('uPhone')) {
+        // Redirect to signup.html if either value is missing
+        window.location.href = 'signup.html';
+    }
+
+    const userName = localStorage.getItem('uName');
+    const userPhone = localStorage.getItem('uPhone');
+
+    if (userName && userPhone) {
+      document.getElementById('userName').textContent = userName;
+      document.getElementById('userPhone').textContent = userPhone;
+      const firstLetter = userName.charAt(0).toUpperCase();
+      document.getElementById('profileInitial').textContent = firstLetter;
+    }
+
+    function logout() {
+      // Clear local storage
+      localStorage.removeItem('uName');
+      localStorage.removeItem('uPhone');
+
+      // Redirect to signup.html
+      window.location.href = 'signup.html';
+    }
+  </script>
+
+</body>
+</html>

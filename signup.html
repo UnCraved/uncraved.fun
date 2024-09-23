@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="theme-color" content="#f7fbfe">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UnCraved | Sign Up</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@700&family=Open+Sans:wght@400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="singup.css">
+</head>
+<body>
+    <header class="header">
+        <div class="logo">
+            <img src="https://raw.githubusercontent.com/NxtCounsil/UnCraved.in/main/20240829_205223.jpg" alt="H&W Logo">
+        </div>
+        <a href="mailto:support@artxsoft.in" class="contact-btn">Contact Us</a>
+    </header>
+
+    <div class="main-content">
+        <img class="img mobile" src="https://raw.githubusercontent.com/NxtCounsil/UnCraved.in/main/IMG_20240908_003439.jpg" alt="Hero Image">
+        <img class="img desktop" src="https://raw.githubusercontent.com/NxtCounsil/UnCraved.in/main/20240908_020215.jpg" alt="Hero Image">
+    </div>
+    
+    <div class="form-here">
+        <div class="form-container">
+            <h1>Your Cravings, Our Command</h1>
+            <h3>Hassle-free one-time registration!</h3>
+            <form>
+                <input type="text" id="name" name="name" placeholder="Your Full Name" required>
+                <input type="phone" id="phone" name="phone" placeholder="Phone Number" required maxlength="13">
+                <button type="submit" id="signUpBtn" disabled>Sign Up</button>
+            </form>
+        </div>
+    </div>
+
+    <script type="text/javascript">
+        document.addEventListener("DOMContentLoaded", function() {
+    const nameInput = document.getElementById("name");
+    const phoneInput = document.getElementById("phone");
+    const signUpBtn = document.getElementById("signUpBtn");
+    if (localStorage.getItem("uName") || localStorage.getItem("uPhone")) {
+                window.location.href = "index.html";
+            }
+
+    // Function to validate phone input
+    function validatePhone() {
+        const phone = phoneInput.value.trim();
+
+        // Regular expression to allow only digits and '+'
+        const phonePattern = /^[0-9+]*$/;
+
+        // Check if phone matches the pattern and length requirements
+        const isValid = phonePattern.test(phone) && 
+                        ((phone.length >= 10 && phone.length <= 13) || 
+                         (phone.length === 13 && phone.includes('+')));
+
+        return isValid;
+    }
+
+    // Function to validate the entire form
+    function validateForm() {
+        const name = nameInput.value.trim();
+        const isPhoneValid = validatePhone();
+
+        // Enable button if name is filled and phone is valid
+        signUpBtn.disabled = !(name && isPhoneValid);
+    }
+
+    // Add event listeners to inputs
+    nameInput.addEventListener("input", validateForm);
+    phoneInput.addEventListener("input", validateForm);
+
+
+    // Handle form submission
+    document.querySelector("form").addEventListener("submit", function(event) {
+        event.preventDefault();
+        const name = nameInput.value.trim();
+        const phone = phoneInput.value.trim();
+
+        if (name && validatePhone()) {
+            localStorage.setItem("uName", name);
+            localStorage.setItem("uPhone", phone);
+            window.location.href = "index.html";
+        }
+    });
+});
+
+    </script>
+</body>
+</html>
