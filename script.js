@@ -242,4 +242,4 @@ applyScrollBlurEffect();
 
         // Update the intro paragraph with the user's name
         const introText = document.getElementById('intro-text');
-        introText.textContent = `Hello, ${userName}! I’m Pratik Patwe, a FY student at MIT ADT. I’ve been exploring the exciting world of technology. I’m the founder and CEO of artxsoft tech, a venture focused on developing cutting-edge hyper-personalized solutions to revolutionize various industries.`;
+        introText.textContent = `Hello, ${userName}! I'm Pratik Patwe, a first-year MIT ADT student from SOC 18. Passionate about technology, development, and artificial intelligence. Let's connect and explore the exciting world of tech together!`;
