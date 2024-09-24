@@ -201,6 +201,13 @@
     </div>
 
     <script>
+        if (!localStorage.getItem('uName') || !localStorage.getItem('uPhone')) {
+    // Redirect to signup.html if either value is missing
+    window.location.href = 'signup.html';
+}
+    </script>
+
+    <script>
         // Fetch data from local storage
         const foodName = localStorage.getItem('food_name');
         const foodImageUrl = localStorage.getItem('imageUrl');
