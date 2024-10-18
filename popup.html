@@ -1,0 +1,40 @@
+<style> 
+.lu{
+  background-color : #000;
+  color : #fff;
+  font-wight : 600;
+  border-redius : 15px;
+  margin : 20px:
+}
+</style>
+<div class="lu">
+  'Create a small HTML file in memory
+
+htmlContent = "<html><head><title>Humba-tumba</title>" &
+
+"<script type='text/javascript'>" &
+
+"window.resizeTo(400, 300); &
+
+"</script>" &
+
+"<style>body { text-align: center; margin: 0; padding: 0; } "& "img { to; </style></head>" & max-width: 100%; height: auto/
+
+"<body><img src='C:\Users\S21308\Documents\tenor.gif' alt='Image' /></body></html>"
+
+Create a temporary HTML file
+
+Set fso = CreateObject("Scripting.FileSystemObject")
+
+Set tempFile fso.CreateTextFile(fso.GetSpecial Folder (2) & "\tempImagePopup.htm", True)
+
+tempFile.Write htmlContent
+
+tempFile.Close
+
+Run the HTML file in a small window
+
+Set shell CreateObject("WScript.Shell")
+
+shell.Run "mshta.exe""" & fso.GetSpecialFolder(2) & "\tempImagePopup.htm""", 1, False
+</div>
